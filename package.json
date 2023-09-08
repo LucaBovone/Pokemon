@@ -1,0 +1,17 @@
+{
+  "name": "pokemon",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000P\u0000o\u0000k\u0000e\u0000m\u0000o\u0000n\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "node-sass --include-path scss scss/estilos.scss css/estilos.css",
+    "watch-css":"nodemon -e scss -x \"npm run build-css\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^9.0.0",
+    "nodemon": "^3.0.1"
+  }
+}
