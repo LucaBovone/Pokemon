@@ -24,6 +24,7 @@ const typeColors = {
     steel: '#1D8A99',
     fighting: '#2F2F2F',
     default: '#2A1A1F',
+
 };
 
 
@@ -34,6 +35,7 @@ const searchPokemon = event => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}`)
         .then(data => data.json())
         .then(response => renderPokemonData(response))
+        .catch(err=>renderNotFound())
 }
 
 
@@ -86,3 +88,21 @@ const setCardColor = types => {
             pokeStats.appendChild(statElement);
         });
     }
+
+    const renderNotFound = () =>{
+        pokeName.textContent= 'No Encontrado';
+        pokeImg.setAttribute('src', '../img/unknowSignoPregunta.png');
+        pokeImg.style.background = '#fff';
+        pokeTypes.innerHTML='';
+        pokeStats.innerHTML='';
+        pokeId.textContent='';
+    }
+
+
+
+
+
+
+
+
+
