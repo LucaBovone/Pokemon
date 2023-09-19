@@ -19,13 +19,22 @@ input {
   color: #000;
   text-align: center;
   margin: 0 auto;
-  background-image: url(../img/pokedex.png);
   background-repeat: no-repeat;
   background-size: cover;
   padding-bottom: 100px;
   padding-top: 210px;
   padding-left: 50px;
   padding-right: 50px; }
+
+.poke-card-juego {
+  position: relative;
+  height: 500px;
+  font-family: 'Roboto Mono', monospace;
+  width: 400px;
+  border-radius: 4px;
+  color: #000;
+  text-align: center;
+  margin: 0 auto; }
 
 .img-container {
   position: relative;
@@ -48,3 +57,19 @@ input {
 .poke-img {
   width: 180px;
   border-radius: 50%; }
+
+table.pokemon-table {
+  display: inline-block;
+  margin-right: 20px; }
+
+.div.table-container {
+  white-space: nowrap;
+  overflow-x: auto; }
+
+.table-container table {
+  border: dotted black; }
+
+.table-container table td {
+  border: solid black;
+  border-radius: 40px;
+  text-align: center; }

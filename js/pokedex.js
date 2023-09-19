@@ -24,7 +24,8 @@ const typeColors = {
     steel: '#1D8A99',
     fighting: '#2F2F2F',
     default: '#2A1A1F',
-
+    fairy: '#C32E9D',
+    dark: '#230443'
 };
 
 
