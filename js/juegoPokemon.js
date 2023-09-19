@@ -59,7 +59,7 @@ function mostrarDatosPokemon(pokemon, tablaId) {
 
     agregarFila('Nombre', pokemon.name, filaDiv);
     agregarFila('  ', pokemon.sprites.front_default, filaDiv);
-    agregarFila('N', pokemon.id, filaDiv);
+    agregarFila('ID', pokemon.id, filaDiv);
     agregarFila('Tipo', pokemon.types.join(', '), filaDiv);
 
     pokemon.stats.forEach((stats) => {
@@ -69,7 +69,51 @@ function mostrarDatosPokemon(pokemon, tablaId) {
     tabla.appendChild(filaDiv);
 }
 
+const MisPokemones = [];
+let pokemonSeleccionado = null; // Variable para almacenar el Pokémon seleccionado
 
+function agregarPokemon(event) {
+    event.preventDefault();
+
+    if (pokemonSeleccionado !== null) {
+        console.log('Ya has elegido tu primer Pokémon. No puedes cambiar tu elección.');
+        return;
+    }
+
+    const pokemonSelect = document.getElementById('pokemonSelect');
+    const selectedPokemon = pokemonSelect.value;
+
+    fetch(`https://pokeapi.co/api/v2/pokemon/${selectedPokemon}`)
+        .then((response) => response.json())
+        .then((data) => {
+            const pokemon = new Pokemon(
+                data.name,
+                data.id,
+                data.sprites,
+                data.stats,
+                data.types.map((type) => type.type.name)
+            );
+
+            MisPokemones.push(pokemon);
+
+            pokemonSeleccionado = selectedPokemon;
+            pokemonSelect.disabled = true;
+
+            console.log(`¡Has elegido a ${selectedPokemon} como tu primer Pokémon!`);
+
+            // Oculta el formulario
+            const formularioPokemon = document.querySelector('form');
+            formularioPokemon.style.display = 'none';
+
+            // Oculta las tablas de los Pokémon no seleccionados
+            const tablas = document.querySelectorAll('.pokemon-table');
+            tablas.forEach((tabla) => {
+                if (tabla.getAttribute('data-tabla') !== selectedPokemon) {
+                    tabla.style.display = 'none';
+                }
+            });
+        });
+}
 
 
 

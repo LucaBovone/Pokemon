@@ -60,16 +60,21 @@ input {
 
 table.pokemon-table {
   display: inline-block;
-  margin-right: 20px; }
+  margin-right: 20px;
+  vertical-align: top; }
 
-.div.table-container {
+.table-container {
   white-space: nowrap;
-  overflow-x: auto; }
+  overflow-x: auto;
+  display: flex; }
 
 .table-container table {
-  border: dotted black; }
+  border: dotted black;
+  margin-right: 20px; }
+
+.table-container table:last-child {
+  margin-right: 0; }
 
 .table-container table td {
-  border: solid black;
   border-radius: 40px;
   text-align: center; }
