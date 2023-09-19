@@ -152,11 +152,10 @@ const primeros151Pokemon = new Map([
     ['mew', 151]
 ]);
 
-// Ejemplo de cómo acceder a la información del mapa
-const nombrePokemon = 'bulbasaur';
-if (primeros151Pokemon.has(nombrePokemon)) {
-    const idPokemon = primeros151Pokemon.get(nombrePokemon);
-    console.log(`El ID de ${nombrePokemon} es ${idPokemon}`);
-} else {
-    console.log(`${nombrePokemon} no está en la lista de los primeros 151 Pokémon.`);
-}
+// const nombrePokemon = 'bulbasaur';
+// if (primeros151Pokemon.has(nombrePokemon)) {
+//     const idPokemon = primeros151Pokemon.get(nombrePokemon);
+//     console.log(`El ID de ${nombrePokemon} es ${idPokemon}`);
+// } else {
+//     console.log(`${nombrePokemon} no está en la lista de los primeros 151 Pokémon.`);
+// }

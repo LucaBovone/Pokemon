@@ -45,7 +45,7 @@ function agregarFila(atributo, valor, tabla) {
 
     tabla.appendChild(fila);
 }
-//
+
 function mostrarDatosPokemon(pokemon, tablaId) {
     const tabla = document.getElementById(tablaId);
 
@@ -70,7 +70,7 @@ function mostrarDatosPokemon(pokemon, tablaId) {
 }
 
 const MisPokemones = [];
-let pokemonSeleccionado = null; // Variable para almacenar el Pokémon seleccionado
+let pokemonSeleccionado = null; 
 
 function agregarPokemon(event) {
     event.preventDefault();
@@ -101,11 +101,9 @@ function agregarPokemon(event) {
 
             console.log(`¡Has elegido a ${selectedPokemon} como tu primer Pokémon!`);
 
-            // Oculta el formulario
             const formularioPokemon = document.querySelector('form');
             formularioPokemon.style.display = 'none';
 
-            // Oculta las tablas de los Pokémon no seleccionados
             const tablas = document.querySelectorAll('.pokemon-table');
             tablas.forEach((tabla) => {
                 if (tabla.getAttribute('data-tabla') !== selectedPokemon) {
