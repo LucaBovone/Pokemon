@@ -2,17 +2,20 @@ table.pokemon-table {
     display: inline-block;
     margin-right: 20px;
     vertical-align: top; 
+    text-align: center;
 }
 
 .table-container {
     white-space: nowrap;
     overflow-x: auto;
     display: flex; 
+    justify-content: space-around;
 }
 
 .table-container table {
     border: dotted black;
     margin-right: 20px; 
+    text-align: center;
 }
 
 .table-container table:last-child {
@@ -21,5 +24,9 @@ table.pokemon-table {
 
 .table-container table td {
     border-radius: 40px;
+    text-align: center;
+}
+
+body{
     text-align: center;
 }
