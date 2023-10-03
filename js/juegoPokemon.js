@@ -1,5 +1,10 @@
 let pokemonAdversario = null;
 let pokemonEnemigo = null;
+const pokemonEnemigosGuardados = localStorage.getItem('pokemonEnemigos');
+let pokemonEnemigos = [];
+
+
+
 const mapaPrimeros151 = new Map([
     ['bulbasaur', 1],
     ['ivysaur', 2],
@@ -223,7 +228,7 @@ function mostrarDatosPokemon(pokemon, tablaId) {
     tabla.appendChild(filaDiv);
 }
 
-const MisPokemones = [];
+let MisPokemones = [];
 let pokemonSeleccionado = null; 
 
 function agregarPokemon(event) {
@@ -248,7 +253,11 @@ function agregarPokemon(event) {
                 data.types.map((type) => type.type.name)
             );
 
+            // Agrega el nuevo Pokémon a MisPokemones
             MisPokemones.push(pokemon);
+
+            // Guarda MisPokemones en localStorage
+            guardarMisPokemonesEnLocalStorage();
 
             pokemonSeleccionado = selectedPokemon;
             pokemonSelect.disabled = true;
@@ -276,37 +285,59 @@ function obtenerPokemonAleatorio() {
     return nombrePokemon;
 }
 
-function obtenerPokemonAleatorioDeAPI() {
-    const nombrePokemonAleatorio = obtenerPokemonAleatorio();
-    const url = `https://pokeapi.co/api/v2/pokemon/${nombrePokemonAleatorio}`;
+function obtenerPokemonEnemigo() {
+    if (pokemonEnemigos.length < 3) {
+        const nombrePokemonAleatorio = obtenerPokemonAleatorio();
+        const url = `https://pokeapi.co/api/v2/pokemon/${nombrePokemonAleatorio}`;
 
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-            const nuevoPokemonEnemigo = new Pokemon(
-                data.name,
-                data.id,
-                data.sprites,
-                data.stats,
-                data.types.map((type) => type.type.name)
-            );
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+                const nuevoPokemonEnemigo = new Pokemon(
+                    data.name,
+                    data.id,
+                    data.sprites,
+                    data.stats,
+                    data.types.map((type) => type.type.name)
+                );
 
-            // Reemplaza el Pokémon enemigo actual con el nuevo
-            pokemonEnemigo = nuevoPokemonEnemigo;
+                // Agrega el nuevo Pokémon enemigo al array
+                pokemonEnemigos.push(nuevoPokemonEnemigo);
 
-            // Llama a una función para mostrar los detalles del Pokémon
-            mostrarDetallesPokemon(nuevoPokemonEnemigo);
-        })
-        .catch((error) => {
-            console.error(`Error al obtener el Pokémon: ${error}`);
-        });
+                // Guarda el array pokemonEnemigos en localStorage
+                localStorage.setItem('pokemonEnemigos', JSON.stringify(pokemonEnemigos));
+
+                // Llama a una función para mostrar los detalles del Pokémon
+                mostrarDetallesPokemon(nuevoPokemonEnemigo);
+            })
+            .catch((error) => {
+                console.error(`Error al obtener el Pokémon: ${error}`);
+            });
+    }
+}
+if (pokemonEnemigosGuardados) {
+    pokemonEnemigos = JSON.parse(pokemonEnemigosGuardados);
+} else {
+    [1, 2, 3].forEach(() => obtenerPokemonEnemigo());
 }
 
 function mostrarDetallesPokemon(pokemon) {
     console.log(`Nombre del Pokémon: ${pokemon.nombre}`);
 }
 
-obtenerPokemonAleatorioDeAPI();
+
+function guardarMisPokemonesEnLocalStorage() {
+    localStorage.setItem('misPokemones', JSON.stringify(MisPokemones));
+}
+
+// Función para cargar MisPokemones desde localStorage
+function cargarMisPokemonesDesdeLocalStorage() {
+    const misPokemonesJSON = localStorage.getItem('misPokemones');
+    return misPokemonesJSON ? JSON.parse(misPokemonesJSON) : [];
+}
+
+// Llama a la función para cargar MisPokemones desde localStorage al cargar la página
+MisPokemones = cargarMisPokemonesDesdeLocalStorage();
 
 
 
