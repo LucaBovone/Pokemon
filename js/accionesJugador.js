@@ -5,8 +5,7 @@ const specialAttackButton = document.getElementById('special-attack-button');
 const runButton = document.getElementById('run-button');
 const itemButton = document.getElementById('item-button');
 
-// Función para manejar la elección del usuario y ocultar los botones
-battleOptions.style.display = 'block';
+
 function elegirAccion() {
     battleOptions.style.display = 'block';
 
@@ -30,5 +29,5 @@ function elegirAccion() {
         battleOptions.style.display = 'none';
     });
 }
-
+const buttons = document.querySelectorAll('#attack-button, #special-attack-button, #run-button, #item-button');
 elegirAccion();

@@ -20,13 +20,10 @@ if (pokemonEnemigos.length === 0) {
                 data.types.map((type) => type.type.name)
             );
 
-            // Agrega el nuevo Pokémon enemigo al array
             pokemonEnemigos.push(nuevoPokemonEnemigo);
 
-            // Guarda el array pokemonEnemigos en localStorage
             localStorage.setItem('pokemonEnemigos', JSON.stringify(pokemonEnemigos));
 
-            // Muestra los detalles del Pokémon en tu juego
             mostrarDetallesPokemon(nuevoPokemonEnemigo);
         })
         .catch((error) => {
@@ -37,17 +34,14 @@ if (pokemonEnemigos.length === 0) {
 function buscarPokemonAleatorio() {
     let numeroAleatorio;
 
-    // Genera un número aleatorio entre 1 y 5 para los primeros 5 días
     if (diaActual <= 5) {
         numeroAleatorio = Math.floor(Math.random() * 4) + 1;
     } else {
-        // Después del día 5, genera un número aleatorio entre 1 y 151 (todos los Pokémon)
         numeroAleatorio = Math.floor(Math.random() * 151) + 1;
     }
 
     let nombrePokemon;
 
-    // Selecciona un Pokémon según el número aleatorio
     if (diaActual <= 5) {
         switch (numeroAleatorio) {
             case 1:
@@ -80,13 +74,11 @@ function buscarPokemonAleatorio() {
                 data.types.map((type) => type.type.name)
             );
 
-            // Agrega el nuevo Pokémon enemigo al array
             pokemonEnemigos.push(pokemon);
 
-            // Guarda el array pokemonEnemigos en localStorage
             localStorage.setItem('pokemonEnemigos', JSON.stringify(pokemonEnemigos));
 
-            // Muestra los detalles del Pokémon en tu juego
+
             mostrarDetallesPokemon(pokemon);
         })
         .catch((error) => {
@@ -94,21 +86,21 @@ function buscarPokemonAleatorio() {
         });
 }
 function mostrarPokemonesEnemigos() {
-    const tabla = document.getElementById('pokemon-seleccionado');
+    const tabla = document.getElementById('pokemon-enemigo');
 
     if (!tabla) {
         console.error('Tabla de Pokémon seleccionados no encontrada.');
         return;
     }
 
-    // Limpia la tabla antes de agregar nuevos Pokémon
+
     tabla.innerHTML = '';
 
     pokemonEnemigos.forEach((pokemon) => {
         const tablaPokemon = document.createElement('table');
-        tablaPokemon.classList.add('pokemon-table'); // Agrega la clase CSS
+        tablaPokemon.classList.add('pokemon-table'); 
 
-        // Crea y agrega filas y celdas para mostrar los datos del Pokémon
+
         agregarFila('Nombre', pokemon.name, tablaPokemon);
         agregarFila('  ', pokemon.sprites.front_default, tablaPokemon);
         agregarFila('ID', pokemon.id, tablaPokemon);

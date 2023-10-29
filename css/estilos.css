@@ -62,7 +62,8 @@ table.pokemon-table {
   display: inline-block;
   margin-right: 20px;
   vertical-align: top;
-  text-align: center; }
+  text-align: center;
+  background-color: rgba(216, 216, 216, 0.722); }
 
 .table-container {
   white-space: nowrap;

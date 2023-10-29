@@ -98,21 +98,19 @@ function agregarPokemon(event) {
                 data.types.map((type) => type.type.name)
             );
 
-            // Agrega el nuevo Pokémon a MisPokemones
             if(misPokemones.length>0){
                 Toastify({
                     text: `Ya habias elejido pokemon inicial, continua`,
-                    duration: 5000, // Duración en milisegundos
+                    duration: 5000, 
                 }).showToast();
             }else{
             MisPokemones.push(pokemon);
             Toastify({
                 text: `¡Has elegido a ${selectedPokemon} como tu primer Pokémon!`,
-                duration: 5000, // Duración en milisegundos
+                duration: 5000, 
             }).showToast();
             }
 
-            // Guarda MisPokemones en localStorage
             guardarMisPokemonesEnLocalStorage();
 
             pokemonSeleccionado = selectedPokemon;
@@ -139,14 +137,12 @@ function mostrarMisPokemones() {
         return;
     }
 
-    // Limpia la tabla antes de agregar nuevos Pokémon
     tabla.innerHTML = '';
 
     misPokemones.forEach((pokemon) => {
         const tablaPokemon = document.createElement('table');
         tablaPokemon.classList.add('pokemon-table'); // Agrega la clase CSS
 
-        // Crea y agrega filas y celdas para mostrar los datos del Pokémon
         agregarFila('Nombre', pokemon.name, tablaPokemon);
         agregarFila('  ', pokemon.sprites.front_default, tablaPokemon);
         agregarFila('ID', pokemon.id, tablaPokemon);
@@ -182,8 +178,6 @@ function cargarMisPokemonesDesdeLocalStorage() {
     return misPokemonesJSON ? JSON.parse(misPokemonesJSON) : [];
 }
 
-// Llama a la función para cargar MisPokemones desde localStorage al cargar la página
 MisPokemones = cargarMisPokemonesDesdeLocalStorage();
 
-console.log(misPokemones[0].stats[5].base_stat);
 

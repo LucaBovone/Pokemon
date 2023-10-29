@@ -22,12 +22,20 @@ document.getElementById('acciones-form').addEventListener('submit', function (e)
         switch (seleccion) {
             case 'buscar-pokemon':
                 mostrarNotificacion(`Día ${diaActual}: Buscando un nuevo Pokémon...`,0);
-                mostrarNotificacion(`Día ${diaActual}: Pokemon encontrado`, 1000);
+                mostrarNotificacion(`Día ${diaActual}: Pokemon encontrado ${pokemonEnemigos[0].name}`, 1000);
                 mostrarPokemonesEnemigos()
+                mostrarMisPokemones();
+                determinarPokemonInicial();
+                buttons.forEach((button) => {
+                    button.classList.remove('ocultar');
+                });
 
-
-                
                 break;
+
+
+
+
+
             case 'buscar-objeto':
                 mostrarNotificacion(`Día ${diaActual}: Buscando un objeto...`);
                 break;
