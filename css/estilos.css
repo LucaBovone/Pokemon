@@ -84,3 +84,6 @@ table.pokemon-table {
 
 body {
   text-align: center; }
+
+.ocultar {
+  display: none; }

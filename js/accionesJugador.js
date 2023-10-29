@@ -1,40 +1,34 @@
-const accionesForm = document.getElementById("acciones-form");
-accionesForm.addEventListener("submit", realizarAccion);
+// Después de mostrar los detalles del Pokémon enemigo
+const battleOptions = document.querySelector('.battle-options');
+const attackButton = document.getElementById('attack-button');
+const specialAttackButton = document.getElementById('special-attack-button');
+const runButton = document.getElementById('run-button');
+const itemButton = document.getElementById('item-button');
 
-function realizarAccion(event) {
-    event.preventDefault();
+// Función para manejar la elección del usuario y ocultar los botones
+battleOptions.style.display = 'block';
+function elegirAccion() {
+    battleOptions.style.display = 'block';
 
-    const accionSelect = document.getElementById("accion");
-    const accionElegida = accionSelect.value;
+    attackButton.addEventListener('click', () => {
 
-    switch (accionElegida) {
-        case "buscar-pokemon":
-            buscarPokemon();
-            break;
-        case "buscar-objeto":
-            buscarObjeto();
-            break;
-        case "curar-pokemones":
-            curarPokemones();
-            break;
-        default:
-            console.log("Acción no reconocida.");
-    }
+        battleOptions.style.display = 'none';
+    });
+
+    specialAttackButton.addEventListener('click', () => {
+
+        battleOptions.style.display = 'none';
+    });
+
+    runButton.addEventListener('click', () => {
+
+        battleOptions.style.display = 'none';
+    });
+
+    itemButton.addEventListener('click', () => {
+
+        battleOptions.style.display = 'none';
+    });
 }
 
-function buscarPokemon() {
-
-    console.log("Has elegido la acción 'Buscar Pokémon'.");
-}
-
-// Función para la acción "Buscar Objeto"
-function buscarObjeto() {
-
-    console.log("Has elegido la acción 'Buscar Objeto'.");
-}
-
-// Función para la acción "Curar Pokémon"
-function curarPokemones() {
-
-    console.log("Has elegido la acción 'Curar Pokémones'.");
-}
+elegirAccion();

@@ -6,12 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-css": "node-sass --include-path scss scss/estilos.scss css/estilos.css",
-    "watch-css":"nodemon -e scss -x \"npm run build-css\""
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "node-sass": "^9.0.0",
     "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "toastify-js": "^1.12.0"
   }
 }

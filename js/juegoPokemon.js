@@ -1,9 +1,7 @@
 let pokemonAdversario = null;
 let pokemonEnemigo = null;
-const pokemonEnemigosGuardados = localStorage.getItem('pokemonEnemigos');
-let pokemonEnemigos = [];
-
-
+const misPokemonesJSON = localStorage.getItem('misPokemones');
+misPokemones = misPokemonesJSON ? JSON.parse(misPokemonesJSON) : [];
 
 
 
@@ -29,7 +27,7 @@ obtenerDatosPokemon('https://pokeapi.co/api/v2/pokemon/squirtle', 'pokemon-table
 function agregarFila(atributo, valor, tabla) {
     const fila = document.createElement('tr');
     const celdaAtributo = document.createElement('td');
-    const celdaValor = document.createElement('td');
+    const celdaValor = document.createElement('td');    
 
     celdaAtributo.textContent = atributo;
 
@@ -51,6 +49,7 @@ function agregarFila(atributo, valor, tabla) {
     tabla.appendChild(fila);
 }
 
+
 function mostrarDatosPokemon(pokemon, tablaId) {
     const tabla = document.getElementById(tablaId);
 
@@ -70,13 +69,12 @@ function mostrarDatosPokemon(pokemon, tablaId) {
     pokemon.stats.forEach((stats) => {
         agregarFila(stats.stat.name, stats.base_stat, filaDiv);
     });
-    
+
 
     tabla.appendChild(filaDiv);
 }
 
-let MisPokemones = [];
-let pokemonSeleccionado = null; 
+let pokemonSeleccionado = null;
 
 function agregarPokemon(event) {
     event.preventDefault();
@@ -101,7 +99,18 @@ function agregarPokemon(event) {
             );
 
             // Agrega el nuevo Pokémon a MisPokemones
+            if(misPokemones.length>0){
+                Toastify({
+                    text: `Ya habias elejido pokemon inicial, continua`,
+                    duration: 5000, // Duración en milisegundos
+                }).showToast();
+            }else{
             MisPokemones.push(pokemon);
+            Toastify({
+                text: `¡Has elegido a ${selectedPokemon} como tu primer Pokémon!`,
+                duration: 5000, // Duración en milisegundos
+            }).showToast();
+            }
 
             // Guarda MisPokemones en localStorage
             guardarMisPokemonesEnLocalStorage();
@@ -109,69 +118,59 @@ function agregarPokemon(event) {
             pokemonSeleccionado = selectedPokemon;
             pokemonSelect.disabled = true;
 
-            console.log(`¡Has elegido a ${selectedPokemon} como tu primer Pokémon!`);
-
             const formularioPokemon = document.querySelector('form');
             formularioPokemon.style.display = 'none';
 
+            const formularioAcciones = document.getElementById('acciones-form');
+            formularioAcciones.classList.remove('ocultar');
+
             const tablas = document.querySelectorAll('.pokemon-table');
             tablas.forEach((tabla) => {
-                if (tabla.getAttribute('data-tabla') !== selectedPokemon) {
-                    tabla.style.display = 'none';
-                }
+                tabla.style.display = 'none';
             });
         });
 }
-function obtenerPokemonAleatorio() {
-    // Genera un número aleatorio entre 1 y 151
-    const numeroAleatorio = Math.floor(Math.random() * 151) + 1;
 
-    // Busca el nombre correspondiente en el mapa
-    const nombrePokemon = [...mapaPrimeros151.keys()][numeroAleatorio - 1];
+function mostrarMisPokemones() {
+    const tabla = document.getElementById('pokemon-seleccionado');
 
-    return nombrePokemon;
-}
-
-function obtenerPokemonEnemigo() {
-    if (pokemonEnemigos.length < 3) {
-        const nombrePokemonAleatorio = obtenerPokemonAleatorio();
-        const url = `https://pokeapi.co/api/v2/pokemon/${nombrePokemonAleatorio}`;
-
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-                const nuevoPokemonEnemigo = new Pokemon(
-                    data.name,
-                    data.id,
-                    data.sprites,
-                    data.stats,
-                    data.types.map((type) => type.type.name)
-                );
-
-                // Agrega el nuevo Pokémon enemigo al array
-                pokemonEnemigos.push(nuevoPokemonEnemigo);
-
-                // Guarda el array pokemonEnemigos en localStorage
-                localStorage.setItem('pokemonEnemigos', JSON.stringify(pokemonEnemigos));
-
-                // Llama a una función para mostrar los detalles del Pokémon
-                mostrarDetallesPokemon(nuevoPokemonEnemigo);
-            })
-            .catch((error) => {
-                console.error(`Error al obtener el Pokémon: ${error}`);
-            });
+    if (!tabla) {
+        console.error('Tabla de Pokémon seleccionados no encontrada.');
+        return;
     }
+
+    // Limpia la tabla antes de agregar nuevos Pokémon
+    tabla.innerHTML = '';
+
+    misPokemones.forEach((pokemon) => {
+        const tablaPokemon = document.createElement('table');
+        tablaPokemon.classList.add('pokemon-table'); // Agrega la clase CSS
+
+        // Crea y agrega filas y celdas para mostrar los datos del Pokémon
+        agregarFila('Nombre', pokemon.name, tablaPokemon);
+        agregarFila('  ', pokemon.sprites.front_default, tablaPokemon);
+        agregarFila('ID', pokemon.id, tablaPokemon);
+        agregarFila('Tipo', pokemon.types.join(', '), tablaPokemon);
+
+        pokemon.stats.forEach((stats) => {
+            agregarFila(stats.stat.name, stats.base_stat, tablaPokemon);
+        });
+
+        tabla.appendChild(tablaPokemon);
+    });
 }
-if (pokemonEnemigosGuardados) {
-    pokemonEnemigos = JSON.parse(pokemonEnemigosGuardados);
-} else {
-    [1, 2, 3].forEach(() => obtenerPokemonEnemigo());
-}
+const mostrarPokemonesButton = document.getElementById('mostrar-pokemones-button');
+
+mostrarPokemonesButton.addEventListener('click', function() {
+    mostrarMisPokemones();
+});
+
+
+
 
 function mostrarDetallesPokemon(pokemon) {
     console.log(`Nombre del Pokémon: ${pokemon.nombre}`);
 }
-
 
 function guardarMisPokemonesEnLocalStorage() {
     localStorage.setItem('misPokemones', JSON.stringify(MisPokemones));
@@ -185,9 +184,6 @@ function cargarMisPokemonesDesdeLocalStorage() {
 
 // Llama a la función para cargar MisPokemones desde localStorage al cargar la página
 MisPokemones = cargarMisPokemonesDesdeLocalStorage();
-MisPokemones = [];
 
-
-
-
+console.log(misPokemones[0].stats[5].base_stat);
 
