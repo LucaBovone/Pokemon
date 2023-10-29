@@ -21,7 +21,12 @@ document.getElementById('acciones-form').addEventListener('submit', function (e)
     if (opcionesElegidas < 3) {
         switch (seleccion) {
             case 'buscar-pokemon':
-                mostrarNotificacion(`Día ${diaActual}: Buscando un nuevo Pokémon...`);
+                mostrarNotificacion(`Día ${diaActual}: Buscando un nuevo Pokémon...`,0);
+                mostrarNotificacion(`Día ${diaActual}: Pokemon encontrado`, 1000);
+                mostrarPokemonesEnemigos()
+
+
+                
                 break;
             case 'buscar-objeto':
                 mostrarNotificacion(`Día ${diaActual}: Buscando un objeto...`);
@@ -51,11 +56,13 @@ function avanzarDia() {
 
 }
 
-function mostrarNotificacion(mensaje) {
-    Toastify({
-        text: mensaje,
-        duration: 3000, 
-    }).showToast();
+function mostrarNotificacion(mensaje, delay) {
+    setTimeout(function() {
+        Toastify({
+            text: mensaje,
+            duration: 3000,
+        }).showToast();
+    }, delay);
 }
 // localStorage.setItem('diaActual', '1');
 // diaActual = 1;

@@ -93,3 +93,31 @@ function buscarPokemonAleatorio() {
             console.error(`Error al buscar el Pokémon: ${error}`);
         });
 }
+function mostrarPokemonesEnemigos() {
+    const tabla = document.getElementById('pokemon-seleccionado');
+
+    if (!tabla) {
+        console.error('Tabla de Pokémon seleccionados no encontrada.');
+        return;
+    }
+
+    // Limpia la tabla antes de agregar nuevos Pokémon
+    tabla.innerHTML = '';
+
+    pokemonEnemigos.forEach((pokemon) => {
+        const tablaPokemon = document.createElement('table');
+        tablaPokemon.classList.add('pokemon-table'); // Agrega la clase CSS
+
+        // Crea y agrega filas y celdas para mostrar los datos del Pokémon
+        agregarFila('Nombre', pokemon.name, tablaPokemon);
+        agregarFila('  ', pokemon.sprites.front_default, tablaPokemon);
+        agregarFila('ID', pokemon.id, tablaPokemon);
+        agregarFila('Tipo', pokemon.types.join(', '), tablaPokemon);
+
+        pokemon.stats.forEach((stats) => {
+            agregarFila(stats.stat.name, stats.base_stat, tablaPokemon);
+        });
+
+        tabla.appendChild(tablaPokemon);
+    });
+}
